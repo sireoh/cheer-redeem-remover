@@ -3,7 +3,7 @@
     "name": "Remove Twitch Cheer",
     "version": "1.0",
   
-    "description": "Adds a red border to all webpages matching mozilla.org.",
+    "description": "Removes the cheer cards from twitch redeems.",
   
     "icons": {
       "48": "icons/icon-48.png",
@@ -16,5 +16,4 @@
         "js": ["remove_twitch_cheer.js"]
       }
     ]
-  }
-  
+}

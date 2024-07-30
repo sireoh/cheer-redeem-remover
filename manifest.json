@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Remove Twitch Cheer",
-    "version": "1.0",
+    "version": "2.0",
   
     "description": "Removes the cheer cards from twitch redeems.",
   
@@ -13,7 +13,14 @@
     "content_scripts": [
       {
         "matches": ["https://www.twitch.tv/*"],
-        "js": ["remove_twitch_cheer.js"]
+        "js": ["index.js"]
       }
-    ]
+    ],
+
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "cheer-redeem-remover@vincef.xyz"
+      }
+    }
+
 }

@@ -1,5 +1,23 @@
-let indexData = {};
+// ----------------------------TESTING -----------------------------------------------
+function handleMessage(request, sender, sendResponse) {
+    console.log(`Message from background script: ${JSON.stringify(request)}`);
+    
+    // Process the data
+    let data = request;
+    // console.log(data);
+    
+    // For example, you can set this data into some global variable or directly use it
+    setRewardsPointIcon(data.src, data.alt);
+    localStorage.setItem("src", data.src);
+    localStorage.setItem("alt", data.alt);
+    
+    // Send response back to the background script
+    sendResponse({ response: "Data received in content script" });
+}
 
+// Listen for messages from the background script
+browser.runtime.onMessage.addListener(handleMessage);
+// ----------------------------TESTING -----------------------------------------------
 let addedEventListener = false;
 
 function getNodes() {
@@ -27,6 +45,8 @@ function update() {
 
     getNodes().arr[0].innerHTML = "";
     getNodes().arr[1].innerHTML = "";
+
+    setRewardsPointIcon(localStorage.getItem("src"), localStorage.getItem("alt"));
 }
 
 setInterval(update, 700);
@@ -60,34 +80,14 @@ function updateTopMenu() {
     botRow[0].children[1].innerHTML = "";
 }
 
-function buildIcon(str, alt) {
-    return `<div class="Layout-sc-1xcs6mc-0 gfgICc channel-points-icon channel-points-icon--medium" id="1deb0c31-a360-4ff6-8dca-aade425ef7e0">
-                <img
-                    alt="${alt}"
-                    src="${str}"
-                />
-            </div>`;
+function buildIcon(src, alt) {
+    console.log("data from buildIcon", src, alt);
+    return `<div class="Layout-sc-1xcs6mc-0 gfgICc channel-points-icon channel-points-icon--medium">
+        <img src="${ src }" alt="${ alt }" />
+    </div>`;
 }
 
-function setRewardsPointIcon() {
+function setRewardsPointIcon(src, alt) {
     const icon = document.getElementsByClassName("Layout-sc-1xcs6mc-0 gfgICc channel-points-icon channel-points-icon--medium")[0].children[0].children[0];
+    icon.parentElement.outerHTML = buildIcon(src, alt);
 }
-
-// ----------------------------TESTING -----------------------------------------------
-function handleMessage(request, sender, sendResponse) {
-    console.log(`Message from background script: ${JSON.stringify(request)}`);
-    
-    // Process the data
-    let data = request;
-
-    console.log(data);
-    
-    // For example, you can set this data into some global variable or directly use it
-    window.indexData = data;
-    
-    // Send response back to the background script
-    sendResponse({ response: "Data received in content script" });
-}
-
-// Listen for messages from the background script
-browser.runtime.onMessage.addListener(handleMessage);

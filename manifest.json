@@ -1,26 +1,32 @@
 {
     "manifest_version": 2,
     "name": "Remove Twitch Cheer",
-    "version": "2.0",
-  
-    "description": "Removes the cheer cards from twitch redeems.",
-  
+    "version": "3.0",
+    "background": {
+      "scripts": ["background.js"]
+    },
+    "description": "Removes the cheer icon and cards from twitch redeems, and changes default rewards point icon.",
     "icons": {
       "48": "icons/icon-48.png",
       "96": "icons/icon-96.png"
     },
-  
+    "permissions": [
+      "storage",
+      "tabs",
+      "activeTab"
+    ],
+    "browser_action": {
+      "default_popup": "popup.html"
+    },
     "content_scripts": [
       {
         "matches": ["https://www.twitch.tv/*"],
         "js": ["index.js"]
       }
     ],
-
     "browser_specific_settings": {
       "gecko": {
         "id": "cheer-redeem-remover@vincef.xyz"
       }
     }
-
 }

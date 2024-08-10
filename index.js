@@ -1,3 +1,5 @@
+let indexData = {};
+
 let addedEventListener = false;
 
 function getNodes() {
@@ -43,16 +45,6 @@ function updatePowerups() {
     }, 700);
 }
 
-// function getChildren(str) {
-//     let arr = [];
-//     const elem = document.getElementsByClassName(str);
-//     const btn = elem[0].children;
-//     for (let i = 0; i < btn.length; i++) {
-//         arr.push(btn[i]);
-//     }
-//     return arr;
-// }
-
 function updateTopMenu() {
     //Setup Constants
     const elem = document.getElementsByClassName("Layout-sc-1xcs6mc-0 gNStSQ");
@@ -67,3 +59,35 @@ function updateTopMenu() {
     //Add Close Button
     botRow[0].children[1].innerHTML = "";
 }
+
+function buildIcon(str, alt) {
+    return `<div class="Layout-sc-1xcs6mc-0 gfgICc channel-points-icon channel-points-icon--medium" id="1deb0c31-a360-4ff6-8dca-aade425ef7e0">
+                <img
+                    alt="${alt}"
+                    src="${str}"
+                />
+            </div>`;
+}
+
+function setRewardsPointIcon() {
+    const icon = document.getElementsByClassName("Layout-sc-1xcs6mc-0 gfgICc channel-points-icon channel-points-icon--medium")[0].children[0].children[0];
+}
+
+// ----------------------------TESTING -----------------------------------------------
+function handleMessage(request, sender, sendResponse) {
+    console.log(`Message from background script: ${JSON.stringify(request)}`);
+    
+    // Process the data
+    let data = request;
+
+    console.log(data);
+    
+    // For example, you can set this data into some global variable or directly use it
+    window.indexData = data;
+    
+    // Send response back to the background script
+    sendResponse({ response: "Data received in content script" });
+}
+
+// Listen for messages from the background script
+browser.runtime.onMessage.addListener(handleMessage);
